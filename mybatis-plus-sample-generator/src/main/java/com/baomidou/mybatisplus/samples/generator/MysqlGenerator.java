@@ -78,7 +78,7 @@ public class MysqlGenerator {
 
         /**
          * 自定义配置
-         *指定自定义模板路径, 位置：/resources/templates/entity2.java.ftl(或者是.vm)
+         *指定自定义模板路径, 位置：/resources/template/entity.java.ftl(或者是.vm)
          *注意不要带上.ftl(或者是.vm), 会根据使用的模板引擎自动识别
          */
         TemplateConfig templateConfig = new TemplateConfig()
@@ -115,7 +115,7 @@ public class MysqlGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.no_change);
         strategy.setSuperEntityClass("com.baomidou.mybatisplus.samples.generator.common.BaseEntity");
-        strategy.setEntityLombokModel(true);
+        strategy.setEntityLombokModel(false);
         strategy.setSuperControllerClass("com.baomidou.mybatisplus.samples.generator.common.BaseController");
         strategy.setInclude(scanner("表名"));
         strategy.setSuperEntityColumns("id");

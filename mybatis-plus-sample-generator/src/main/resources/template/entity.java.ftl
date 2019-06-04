@@ -3,15 +3,6 @@ package ${package.Entity};
 <#list table.importPackages as pkg>
     import ${pkg};
 </#list>
-<#if swagger2>
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
-</#if>
-<#if entityLombokModel>
-    import lombok.Data;
-    import lombok.EqualsAndHashCode;
-    import lombok.experimental.Accessors;
-</#if>
 
 /**
 * <p>
@@ -21,30 +12,21 @@ package ${package.Entity};
 * @author ${author}
 * @since ${date}
 */
-<#if entityLombokModel>
-    @Data
-    <#if superEntityClass??>
-        @EqualsAndHashCode(callSuper = true)
-    <#else>
-        @EqualsAndHashCode(callSuper = false)
-    </#if>
-    @Accessors(chain = true)
-</#if>
 <#if table.convert>
-    @TableName("${table.name}")
-</#if>
-<#if swagger2>
-    @ApiModel(value="${entity}对象", description="${table.comment!}")
+@Entity
+@Table(name = "${table.name}")
+ @Display("${table.comment}")
 </#if>
 <#if superEntityClass??>
-    public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
+public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
 <#elseif activeRecord>
-    public class ${entity} extends Model<${entity}> {
+public class ${entity} extends Model<${entity}> {
 <#else>
-    public class ${entity} implements Serializable {
+public class ${entity} implements Serializable {
 </#if>
 
 <#if entitySerialVersionUID>
+    public static final String Name = "${entity}";
     private static final long serialVersionUID = 1L;
 </#if>
 <#-- ----------  BEGIN 字段循环遍历  ---------->
@@ -57,19 +39,14 @@ package ${package.Entity};
         <#if swagger2>
             @ApiModelProperty(value = "${field.comment}")
         <#else>
-            /**
-            * ${field.comment}
-            */
+    @Display("${field.comment}")
         </#if>
     </#if>
+    @Column(name = "${field.name}")
     <#if field.keyFlag>
     <#-- 主键 -->
         <#if field.keyIdentityFlag>
-            @TableId(value = "${field.name}", type = IdType.AUTO)
-        <#elseif idType??>
-            @TableId(value = "${field.name}", type = IdType.${idType})
-        <#elseif field.convert>
-            @TableId("${field.name}")
+            @Id
         </#if>
     <#-- 普通字段 -->
     <#elseif field.fill??>
@@ -134,19 +111,5 @@ package ${package.Entity};
     </#if>
     }
 
-</#if>
-<#if !entityLombokModel>
-    @Override
-    public String toString() {
-    return "${entity}{" +
-    <#list table.fields as field>
-        <#if field_index==0>
-            "${field.propertyName}=" + ${field.propertyName} +
-        <#else>
-            ", ${field.propertyName}=" + ${field.propertyName} +
-        </#if>
-    </#list>
-    "}";
-    }
 </#if>
 }

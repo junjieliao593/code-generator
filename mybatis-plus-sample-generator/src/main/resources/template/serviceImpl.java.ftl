@@ -15,12 +15,13 @@ import org.springframework.stereotype.Service;
  * @since ${date}
  */
 @Service
-<#if kotlin>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+public class ${table.serviceImplName} extends AbstractServiceBase<${entity} , ${entity}Condition, String> implements ${table.serviceName} {
 
-}
-<#else>
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+    @Autowired
+    private ${entity}Repository ${entity}Repository;
 
+    @Override
+    protected AbstractRepositoryBase<${entity}, String> getRepository() {
+        return ${entity}Repository;
+    }
 }
-</#if>
