@@ -101,7 +101,7 @@ public class MysqlGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setColumnNaming(NamingStrategy.no_change);
         strategy.setSuperEntityClass("com.baomidou.mybatisplus.samples.generator.common.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setSuperControllerClass("com.baomidou.mybatisplus.samples.generator.common.BaseController");
