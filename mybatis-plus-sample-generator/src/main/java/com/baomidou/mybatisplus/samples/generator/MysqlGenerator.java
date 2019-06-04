@@ -82,10 +82,15 @@ public class MysqlGenerator {
          *注意不要带上.ftl(或者是.vm), 会根据使用的模板引擎自动识别
          */
         TemplateConfig templateConfig = new TemplateConfig()
-                .setEntity("templates/entity.java");
+                .setEntity("template/entity.java")
+                .setService("template/service.java")
+                .setServiceImpl("template/serviceImpl.java")
+                .setMapper("template/mapper.java")
+                .setController("template/controller.java");
 
         //配置自定义模板
         mpg.setTemplate(templateConfig);
+
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
@@ -93,7 +98,7 @@ public class MysqlGenerator {
             }
         };
         List<FileOutConfig> focList = new ArrayList<>();
-        focList.add(new FileOutConfig("/templates/mapper.xml.ftl") {
+        focList.add(new FileOutConfig("/template/mapper.xml.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
