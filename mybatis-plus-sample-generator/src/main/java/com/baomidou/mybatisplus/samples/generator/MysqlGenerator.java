@@ -1,8 +1,6 @@
 package com.baomidou.mybatisplus.samples.generator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -78,7 +76,16 @@ public class MysqlGenerator {
         pc.setParent("com.baomidou.mybatisplus.samples.generator");
         mpg.setPackageInfo(pc);
 
-        // 自定义配置
+        /**
+         * 自定义配置
+         *指定自定义模板路径, 位置：/resources/templates/entity2.java.ftl(或者是.vm)
+         *注意不要带上.ftl(或者是.vm), 会根据使用的模板引擎自动识别
+         */
+        TemplateConfig templateConfig = new TemplateConfig()
+                .setEntity("templates/entity.java");
+
+        //配置自定义模板
+        mpg.setTemplate(templateConfig);
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
@@ -96,7 +103,7 @@ public class MysqlGenerator {
         });
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
+//        mpg.setTemplate(new TemplateConfig().setXml(null));
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
